@@ -10,7 +10,7 @@ local state = {
 ---@param buf zshow.ContentBuffer
 ---@param opts zshow.config.formatting
 local function render_header(buf, plugins, opts)
-    local total = #plugins.loaded + #plugins.disabled + #plugins.disabled
+    local total = #plugins.loaded + #plugins.unloaded + #plugins.disabled
 
     buf:empty_line()
         ---@diagnostic disable-next-line: param-type-mismatch
