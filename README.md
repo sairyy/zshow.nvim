@@ -18,7 +18,7 @@ basic interaction for inspecting plugin sources.
 - Quickly close the window with `q` or `<Esc>`
 
 
-https://files.catbox.moe/ckubei.mp4
+![Github couldn't load the preview: https://gitlab.com/sairy/zshow.nvim#-features](./.gitlab/demo.mp4)
 
 
 ---
