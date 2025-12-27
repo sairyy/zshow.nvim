@@ -66,10 +66,10 @@ function M.get_plugininfo()
         if not plug.spec.src:match('zpack%.nvim') then
             local zspec = zp.spec_registry[plug.spec.src]
 
-            if zspec.loaded then
-                table.insert(plugin_info.loaded, info)
-            elseif not resolve_enabled(zspec.spec, zspec.plugin) then
+            if not zspec or not resolve_enabled(zspec.spec, zspec.plugin) then
                 table.insert(plugin_info.disabled, info)
+            elseif zspec.loaded then
+                table.insert(plugin_info.loaded, info)
             else
                 table.insert(plugin_info.unloaded, info)
             end
