@@ -42,7 +42,9 @@ return {
     src = 'https://gitlab.com/sairy/zpack.nvim',
     lazy = false, -- no need for lazy loading
     init = function()
-        -- your config here
+        vim.g.zshow_opts = {
+            -- your config here
+        }
     end
 }
 ```
