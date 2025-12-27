@@ -7,6 +7,7 @@ local M = {}
 
 ---@class zshow.config.formatting
 ---@field listchars string[] characters to use in listings based on nesting level
+---@field show_version boolean display git commit info
 
 ---@class zshow.__config
 ---@field winblend   integer    window pseudo-transparency
@@ -27,6 +28,7 @@ M.default_config = {
 
     formatting = {
         listchars = { '-', '+' },
+        show_version = true,
     },
 
     win_config = {

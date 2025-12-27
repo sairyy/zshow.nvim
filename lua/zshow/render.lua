@@ -51,7 +51,7 @@ local function render_category(category, plugins, buf, opts)
            :append(' ')
            :append(plugin.name, 'ZShowPlugin')
 
-        if plugin.version then
+        if opts.show_version then
             buf:append(' ')
             :append(
                 ('(%s)'):format(plugin.version:sub(1, 7)),
