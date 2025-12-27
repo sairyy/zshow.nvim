@@ -114,7 +114,9 @@ local function add_keymaps(bufnr)
             if err or not sb then
                 vim.ui.open(('%s/commit/%s'):format(plugin.url, plugin.version))
             else
-                vim.cmd.tabedit { plugin.url }
+                vim.schedule(function()
+                    vim.cmd.tabedit { plugin.url }
+                end)
             end
         end)
     end, { buffer = bufnr, desc = 'open plugin uri' })
