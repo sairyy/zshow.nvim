@@ -22,6 +22,7 @@ set_hl('ZShowSectionName', {
 })
 set_hl('ZShowPlugin', { link = 'NormalFloat' })
 set_hl('ZShowPluginCount', { link = 'Comment' })
+set_hl('ZShowGitSha', { link = 'Comment' })
 ---
 
 

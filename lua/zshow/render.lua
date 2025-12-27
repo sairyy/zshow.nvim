@@ -55,7 +55,7 @@ local function render_category(category, plugins, buf, opts)
             buf:append(' ')
             :append(
                 ('(%s)'):format(plugin.version:sub(1, 7)),
-                'Comment' 
+                'ZShowGitSha' 
             )
         end
 
