@@ -128,6 +128,20 @@ local function populate_window(bufnr, _winid, opts)
     add_keymaps(bufnr)
 end
 
+---@param bufnr integer
+---@param opts zshow.add_backdrop.opts
+function add_backdrop(bufnr, opts)
+    vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('zshow::open', { clear = true }),
+        once = true,
+        pattern = 'zshow',
+        callback = function(args)
+            if args.buf == bufnr then
+                require('zshow.util').add_backdrop(args.buf, opts)
+            end
+        end
+    })
+end
 
 ---@param opts zshow.__config
 function M.display_window(opts)
@@ -168,16 +182,7 @@ function M.display_window(opts)
         local backdrop_opts = opts.backdrop
         backdrop_opts.enable = nil ---@cast backdrop_opts zshow.add_backdrop.opts
 
-        vim.api.nvim_create_autocmd('FileType', {
-            group = vim.api.nvim_create_augroup('zshow::open', { clear = true }),
-            once = true,
-            pattern = 'zshow',
-            callback = function(args)
-                if args.buf == state.bufnr then
-                    require('zshow.util').add_backdrop(args.buf, backdrop_opts)
-                end
-            end
-        })
+        add_backdrop(state.bufnr, backdrop_opts)
     end
 
     vim.api.nvim_set_option_value('winblend', opts.winblend, { win = state.winid })
