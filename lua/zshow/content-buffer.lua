@@ -53,15 +53,45 @@ end
 
 function ContentBuffer:linecount() return #self.lines end
 
----@param lineno integer
-function ContentBuffer:get_line_text(lineno)
-    return vim.iter(self.lines[lineno])
+function get_line_text(line)
+    return vim.iter(line)
         :map(function (tok) return tok:get_text() end)
         :join('')
 end
 
-function ContentBuffer:token_iter(lineno)
-    return ipairs(self.lines[lineno])
+---@return string[]
+function ContentBuffer:get_full_text()
+    return vim.iter(self.lines)
+        :map(function(line) return get_line_text(line) end)
+        :totable()
+end
+
+function ContentBuffer:token_iter()
+    local i = 0
+    local line = 1
+    local col_start, col_end = 1, 1
+
+    ---@return integer, integer, integer, zshow.ContentBuffer.line_token
+    return function ()
+        i = i + 1
+
+        -- move over to the next line
+        if i > #self.lines[line] then
+            ---@diagnostic disable-next-line: missing-return-value
+            ---end of buffer
+            if line + 1 > #self.lines then return end
+
+            line, i = line + 1, 1
+            col_start, col_end = 1, 1
+        end
+
+        ---@type zshow.ContentBuffer.line_token
+        local token = self.lines[line][i] 
+        col_start = col_end
+        col_end = col_end + token:get_text():len()
+            
+        return line, col_start, col_end, token
+    end
 end
 
 return ContentBuffer

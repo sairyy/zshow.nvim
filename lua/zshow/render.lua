@@ -64,22 +64,17 @@ local function render_category(category, plugins, buf, opts)
 end
 
 ---@param bufnr integer
----@param line integer
----@param token_iter Iter
-local function render_line_exts(bufnr, line, token_iter)
-    local col = 0
-    token_iter:each(function(_idx, tok)
-        ---@cast tok zshow.ContentBuffer.line_token
-        local text = tok:get_text()
-
+---@param content zshow.ContentBuffer
+local function render_extmarks(bufnr, content)
+    -- line, col 1-indexed
+    for line, col_start, col_end, tok in content:token_iter() do
         if tok:get_hl() ~= nil then
-            vim.api.nvim_buf_set_extmark(bufnr, state.ns, line-1, col, {
+            vim.api.nvim_buf_set_extmark(bufnr, state.ns, line-1, col_start-1, {
                 hl_group = tok:get_hl(),
-                end_col = col + #text
+                end_col = col_end-1,
             })
         end
-        col = col + #text
-    end)
+    end
 end
 
 ---@param opts zshow.config.formatting
@@ -92,17 +87,12 @@ local function render_plugininfo(bufnr, plugins, opts)
     render_category('Not Loaded', plugins.unloaded, content, opts)
     render_category('Disabled', plugins.disabled, content, opts)
 
-    local lines = {}
-    for i = 1, content:linecount() do
-        lines[#lines+1] = content:get_line_text(i)
-    end
+    local lines = content:get_full_text()
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
 
     -- text highlights
     vim.api.nvim_buf_clear_namespace(bufnr, state.ns, 0, -1)
-    for line = 1, content:linecount() do
-        render_line_exts(bufnr, line, vim.iter(content:token_iter(line)))
-    end
+    render_extmarks(bufnr, content)
 end
 
 local function add_keymaps(bufnr)
