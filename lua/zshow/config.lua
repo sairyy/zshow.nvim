@@ -1,10 +1,14 @@
 local M = {}
 
+---@class zshow._config.backdrop : zshow.add_backdrop.opts
+---@field enable? boolean enable backdrop
+
 ---@class zshow._config.formatting
 ---@field listchars string[] characters to use in listings based on nesting level
 
 ---@class zshow._config
 ---@field winblend integer window pseudo-transparency
+---@field backdrop zshow._config.backdrop dimming of windows in the background
 ---@field width number window width as a % of neovim's width (e.g.: 0.6)
 ---@field height number window height as a % of neovim's height (e.g.: 0.6)
 ---@field formatting zshow._config.formatting ui formatting options
@@ -13,6 +17,10 @@ M.default_config = {
     winblend = 0,
     width = 0.6,
     height = 0.6,
+
+    backdrop = {
+        enable = false
+    },
 
     formatting = {
         listchars = { '-', '+' },
