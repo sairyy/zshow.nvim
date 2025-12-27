@@ -1,6 +1,9 @@
 # 🧩 zshow.nvim
 
-A simple plugin for viewing installed plugins for [zpack.nvim](https://github.com/zuqini/zpack.nvim).
+A simple plugin for viewing installed plugins managed by [zpack.nvim](https://github.com/zuqini/zpack.nvim).
+
+It opens a floating window listing plugins grouped by load status and provides
+basic interaction for inspecting plugin sources.
 
 ---
 
@@ -128,6 +131,16 @@ end, { desc = 'View installed plugins' })
 
 ## 🤝 Contributing
 
-Feel free to [open an issue](https://gitlab.com/sairy/zshow.nvim/-/issues/new) or
-[submit an MR](https://gitlab.com/sairy/zshow.nvim/-/merge_requests/new) if you find
-a bug or have any suggestions.
+Feel free to open an issue or submit an MR if you find a bug or have any suggestions.
+
+- [issues](https://gitlab.com/sairy/zshow.nvim/-/issues/new)
+- [merge requests](https://gitlab.com/sairy/zshow.nvim/-/merge_requests/new)
+
+---
+
+## 📋 References
+
+- [zpack.nvim](https://github.com/zuqini/zpack.nvim): plugin manager
+- [nvimdev/nvim-plugin-template](https://github.com/nvimdev/nvim-plugin-template): plugin template
+- [adriankarlen/plugin-view.nvim](https://github.com/adriankarlen/plugin-view.nvim): similar project
+  for vanilla `vim.pack`
