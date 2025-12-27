@@ -57,7 +57,7 @@ Using **zpack.nvim**:
     return {
     -- 'sairyy/zshow.nvim',
     -- uncomment the line above and
-    -- comment the below one for the githuh version
+    -- comment the below one for the github version
         src = 'https://gitlab.com/sairy/zpack.nvim',
         lazy = false, -- no need for lazy loading
         init = function()
