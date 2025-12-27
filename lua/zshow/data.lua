@@ -26,6 +26,22 @@ local function resolve_enabled(spec, plugin)
     return true
 end
 
+---@param name string
+---@return zshow.info?
+function M.get_plugin(name)
+    local ok, plug = pcall(vim.pack.get, { name })
+    if not ok or not plug then
+        return
+    end
+
+    local data = plug[1] --[[@as vim.pack.PlugData]]
+    return {
+        name = data.spec.name,
+        url = data.spec.src,
+        version = data.rev
+    }
+end
+
 function M.get_plugininfo()
     local zp = require('zpack.state')
     local plugins = vim.pack.get()

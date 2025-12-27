@@ -105,36 +105,37 @@ local function render_plugininfo(bufnr, plugins, opts)
     end
 end
 
+local function add_keymaps(bufnr)
+    vim.keymap.set('n', 'q', '<cmd>close<cr>', {
+        buffer = bufnr, desc = 'close window'
+    })
+    vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', {
+        buffer = bufnr, desc = 'close window'
+    })
+
+    vim.keymap.set('n', 'K', function()
+        local plug_name = vim.fn.expand('<cWORD>')
+
+        local plugin = require('zshow.data').get_plugin(plug_name)
+        if not plugin then return end
+
+        -- check if it's a local directory
+        vim.uv.fs_stat(plugin.url, function(err, sb)
+            if err or not sb then
+                vim.ui.open(('%s/commit/%s'):format(plugin.url, plugin.version))
+            else
+                vim.cmd.tabedit { plugin.url }
+            end
+        end)
+    end, { buffer = bufnr, desc = 'open plugin uri' })
+end
+
 ---@param opts zshow.config.formatting
 local function populate_window(bufnr, _winid, opts)
     local info = require('zshow.data').get_plugininfo()
 
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', {
-        buffer = state.bufnr, desc = 'close window'
-    })
-    vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', {
-        buffer = state.bufnr, desc = 'close window'
-    })
-
-    vim.keymap.set('n', 'K', function()
-        local line = vim.api.nvim_get_current_line()
-        local plugin = line:match('^%s*%S+%s+([^%s]+)')
-
-        ---@type zshow.info
-        local match = vim.iter(vim.tbl_values(info)) --[[@as Iter]]
-            :flatten()
-            :find(function(p) return p.name == plugin end)
-            
-        vim.uv.fs_stat(match.url, function(err, sb)
-            if err or not sb then
-                vim.ui.open(('%s/commit/%s'):format(match.url, match.version))
-            else
-                vim.cmd.tabedit { match.url }
-            end
-        end)
-    end, { buffer = state.bufnr, desc = 'open plugin uri' })
-
     render_plugininfo(bufnr, info, opts)
+    add_keymaps(bufnr)
 end
 
 
