@@ -9,18 +9,18 @@ Repository: https://gitlab.com/sairy/zshow.nvim
 ==============================================================================
 Table of Contents                               *zshow.nvim-table-of-contents*
 
-1. zshow.nvim                                          |zshow.nvim-zshow.nvim|
-  - Features                                  |zshow.nvim-zshow.nvim-features|
-  - Requirements                          |zshow.nvim-zshow.nvim-requirements|
-  - Installation                          |zshow.nvim-zshow.nvim-installation|
-  - Configuration                        |zshow.nvim-zshow.nvim-configuration|
-  - Highlights                              |zshow.nvim-zshow.nvim-highlights|
-  - Commands / Keybindings      |zshow.nvim-zshow.nvim-commands-/-keybindings|
-  - Contributing                          |zshow.nvim-zshow.nvim-contributing|
-  - References                              |zshow.nvim-zshow.nvim-references|
+1. zshow.nvim                                                     |zshow.nvim|
+  - Features                                             |zshow.nvim-features|
+  - Requirements                                     |zshow.nvim-requirements|
+  - Installation                                     |zshow.nvim-installation|
+  - Configuration                                   |zshow.nvim-configuration|
+  - Highlights                                         |zshow.nvim-highlights|
+  - Commands / Keybindings                   |zshow.nvim-commands-keybindings|
+  - Contributing                                     |zshow.nvim-contributing|
+  - References                                         |zshow.nvim-references|
 
 ==============================================================================
-1. zshow.nvim                                          *zshow.nvim-zshow.nvim*
+1. zshow.nvim                                                     *zshow.nvim*
 
 A simple plugin for viewing installed plugins managed by zpack.nvim
 <https://github.com/zuqini/zpack.nvim>.
@@ -30,7 +30,7 @@ basic interaction for inspecting plugin sources.
 
 ------------------------------------------------------------------------------
 
-FEATURES                                      *zshow.nvim-zshow.nvim-features*
+FEATURES                                                 *zshow.nvim-features*
 
 - Plugins sorted according to their load status:
     - Loaded
@@ -42,19 +42,22 @@ FEATURES                                      *zshow.nvim-zshow.nvim-features*
 
 ------------------------------------------------------------------------------
 
-REQUIREMENTS                              *zshow.nvim-zshow.nvim-requirements*
+REQUIREMENTS                                         *zshow.nvim-requirements*
 
 - Neovim `>= 0.12.0` (same as zpack <https://github.com/zuqini/zpack.nvim?tab=readme-ov-file#requirements>)
 
 ------------------------------------------------------------------------------
 
-INSTALLATION                              *zshow.nvim-zshow.nvim-installation*
+INSTALLATION                                         *zshow.nvim-installation*
 
 Using **zpack.nvim**:
 
 >lua
     ---@type zpack.Spec
     return {
+    -- 'sairyy/zshow.nvim',
+    -- uncomment the line above and
+    -- comment the below one for the githuh version
         src = 'https://gitlab.com/sairy/zpack.nvim',
         lazy = false, -- no need for lazy loading
         init = function()
@@ -67,7 +70,7 @@ Other plugin managers are unsupported.
 
 ------------------------------------------------------------------------------
 
-CONFIGURATION                            *zshow.nvim-zshow.nvim-configuration*
+CONFIGURATION                                       *zshow.nvim-configuration*
 
 There’s no configuration required to just use the plugin, but you can use the
 `vim.g.zshow_opts` variable to customize some UI aspects.
@@ -92,13 +95,15 @@ DEFAULT CONFIGURATION: ~
         backdrop = {
             enable = false,
             -- only take effect if `enable` set to true
-            winblend = 50,                  -- how much to dim by
-            respect_transparent_bg = true,  -- only dim if background isn't transparent
+            winblend = 50, -- how much to dim by
+            respect_transparent_bg = true, -- only dim if background isn't transparent
         },
     
         formatting = {
-            listchars = { '-', '+' },   -- characters to use in listings based on nesting level
-            show_version = true,        -- display git commit SHA
+            -- characters to use in listings based on nesting level
+            listchars = { '-', '+' },
+            -- display git commit SHA
+            show_version = true,
         },
     
         -- same options as |nvim_open_win()|
@@ -114,7 +119,7 @@ DEFAULT CONFIGURATION: ~
 
 ------------------------------------------------------------------------------
 
-HIGHLIGHTS                                  *zshow.nvim-zshow.nvim-highlights*
+HIGHLIGHTS                                             *zshow.nvim-highlights*
 
   -------------------------------------------------------------------------
   Highlight          What                               Default
@@ -131,7 +136,7 @@ HIGHLIGHTS                                  *zshow.nvim-zshow.nvim-highlights*
   -------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
-COMMANDS / KEYBINDINGS          *zshow.nvim-zshow.nvim-commands-/-keybindings*
+COMMANDS / KEYBINDINGS                       *zshow.nvim-commands-keybindings*
 
 zshow.nvim provides the command `ZShow` to open the plugin window.
 
@@ -143,7 +148,8 @@ Inside the window, the following bindings are available:
 No glabal keybindings are created by default, but you can add your own:
 
 >lua
-    vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>', { desc = 'View installed plugins' })
+    vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>',
+        { desc = 'View installed plugins' })
     
     vim.keymap.set('n', '<leader>zo', function()
         require('zshow').open {
@@ -155,7 +161,7 @@ No glabal keybindings are created by default, but you can add your own:
 
 ------------------------------------------------------------------------------
 
-CONTRIBUTING                              *zshow.nvim-zshow.nvim-contributing*
+CONTRIBUTING                         *zshow.nvim-contributing*
 
 Feel free to open an issue or submit an MR if you find a bug or have any
 suggestions.
@@ -165,11 +171,11 @@ suggestions.
 
 ------------------------------------------------------------------------------
 
-REFERENCES                                  *zshow.nvim-zshow.nvim-references*
+REFERENCES                                             *zshow.nvim-references*
 
 - zpack.nvim <https://github.com/zuqini/zpack.nvim>: plugin manager
 - nvimdev/nvim-plugin-template <https://github.com/nvimdev/nvim-plugin-template>: plugin template
 - adriankarlen/plugin-view.nvim <https://github.com/adriankarlen/plugin-view.nvim>: similar project
     for vanilla `vim.pack`
 
-vim:tw=78:ts=8:noet:ft=help:norl:
+vim:tw=78:ts=8:ft=help:norl:

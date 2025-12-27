@@ -18,7 +18,7 @@ basic interaction for inspecting plugin sources.
 - Quickly close the window with `q` or `<Esc>`
 
 
-![Demo video](./.gitlab/demo.mp4)
+<video src="./.gitlab/demo.mp4" controls></video>
 
 
 ---
@@ -36,6 +36,9 @@ Using **[zpack.nvim](https://github.com/zuqini/zpack.nvim)**:
 ```lua
 ---@type zpack.Spec
 return {
+    -- 'sairyy/zshow.nvim',
+    -- uncomment the line above and
+    -- comment the below one for the githuh version
     src = 'https://gitlab.com/sairy/zpack.nvim',
     lazy = false, -- no need for lazy loading
     init = function()
