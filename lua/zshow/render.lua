@@ -183,6 +183,7 @@ function M.display_window(opts)
     if opts.backdrop.enable then
         local backdrop_opts = opts.backdrop
         backdrop_opts.enable = nil ---@cast backdrop_opts zshow.add_backdrop.opts
+        backdrop_opts.zindex = opts.win_config.zindex
 
         add_backdrop(state.bufnr, backdrop_opts)
     end

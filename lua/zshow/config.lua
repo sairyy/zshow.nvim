@@ -7,7 +7,7 @@ local M = {}
 
 ---@class zshow.config.formatting
 ---@field listchars string[] characters to use in listings based on nesting level
----@field show_version boolean display git commit info
+---@field show_version boolean display git commit SHA
 
 ---@class zshow.__config
 ---@field winblend   integer    window pseudo-transparency
@@ -23,7 +23,10 @@ M.default_config = {
     height = 0.6,
 
     backdrop = {
-        enable = false
+        enable = false,
+        -- only take effect if `enable` set to true
+        winblend = 50,
+        respect_transparent_bg = true,
     },
 
     formatting = {
