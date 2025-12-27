@@ -1,0 +1,2 @@
+zshow.nvim
+----

@@ -1,0 +1,41 @@
+local M = {}
+
+---@class zshow._config.formatting
+---@field listchars string[] characters to use in listings based on nesting level
+
+---@class zshow._config
+---@field winblend integer window pseudo-transparency
+---@field width number window width as a % of neovim's width (e.g.: 0.6)
+---@field height number window height as a % of neovim's height (e.g.: 0.6)
+---@field formatting zshow._config.formatting ui formatting options
+---@field win_config vim.api.keyset.win_config options passed to |nvim_open_win|
+M.default_config = {
+    winblend = 0,
+    width = 0.6,
+    height = 0.6,
+
+    formatting = {
+        listchars = { '-', '+' },
+    },
+
+    win_config = {
+        zindex = 50,
+        title = ' Plugins ',
+        title_pos = 'center',
+    },
+}
+---@class (partial) zshow.config : zshow._config
+
+---@param opts? zshow.config
+---@return zshow.config
+function M.resolve(opts)
+    opts = vim.tbl_deep_extend(
+        'force',
+        M.default_config,
+        opts or vim.g.zshow_opts or {}
+    )
+
+    return opts
+end
+
+return M
