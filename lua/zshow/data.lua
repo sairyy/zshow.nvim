@@ -1,17 +1,9 @@
 ---@class zshow.info
 ---@field name string
 ---@field url string
----@field version? string git revision
+---@field version string git revision
 
 local M = {}
-
----@param plugin zpack.Spec
-local function resolve_url(plugin)
-    return plugin.src
-        or plugin.url
-        or (plugin.dir and vim.uv.fs_realpath(plugin.dir))
-        or ('https://github.com/%s'):format(plugin[1])
-end
 
 ---@param spec zpack.Spec
 ---@param plugin? zpack.Plugin
@@ -36,6 +28,7 @@ end
 
 function M.get_plugininfo()
     local zp = require('zpack.state')
+    local plugins = vim.pack.get()
 
     local plugin_info = {
         ---@type zshow.info[]
@@ -46,31 +39,28 @@ function M.get_plugininfo()
         disabled = {},
     }
 
-    for _, plug in pairs(zp.spec_registry) do
+    for _, plug in ipairs(plugins) do
         local info = {
             name = plug.spec.name,
-            url = resolve_url(plug.spec),
-            version = vim.pack.get({ plug.spec.name })[1].rev ---@diagnostic disable-line: need-check-nil
+            url = plug.spec.src,
+            version = plug.rev,
         }
 
-        if plug.loaded then
-            table.insert(plugin_info.loaded, info)
-        elseif not resolve_enabled(plug.spec, plug.plugin) then
-            table.insert(plugin_info.disabled, info)
+        -- zpack does not keep track of itself
+        if not plug.spec.src:match('zpack%.nvim') then
+            local zspec = zp.spec_registry[plug.spec.src]
+
+            if zspec.loaded then
+                table.insert(plugin_info.loaded, info)
+            elseif not resolve_enabled(zspec.spec, zspec.plugin) then
+                table.insert(plugin_info.disabled, info)
+            else
+                table.insert(plugin_info.unloaded, info)
+            end
         else
-            table.insert(plugin_info.unloaded, info)
+            table.insert(plugin_info.loaded, info)
         end
     end
-
-    -- zpack does not keep track of itself
-    local zpack = vim.pack.get({ 'zpack.nvim' })[1]
-    ---@cast zpack -nil
-
-    table.insert(plugin_info.loaded, {
-        name = zpack.spec.name,
-        url = zpack.spec.src,
-        version = zpack.rev,
-    })
 
     return plugin_info
 end
