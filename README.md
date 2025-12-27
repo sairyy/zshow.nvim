@@ -14,6 +14,10 @@ A simple plugin for viewing installed plugins for [zpack.nvim](https://github.co
     + local repos are opened with `:tabedit` instead
 - Quickly close the window with `q` or `<Esc>`
 
+
+![Demo video](./.gitlab/demo.mp4)
+
+
 ---
 
 ## 📦 Requirements
