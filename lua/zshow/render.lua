@@ -173,6 +173,22 @@ function M.display_window(opts)
 
     populate_window(state.bufnr, state.winid, opts.formatting)
 
+    if opts.backdrop.enable then
+        local backdrop_opts = opts.backdrop
+        backdrop_opts.enable = nil ---@cast backdrop_opts zshow.add_backdrop.opts
+
+        vim.api.nvim_create_autocmd('FileType', {
+            group = vim.api.nvim_create_augroup('zshow::open', { clear = true }),
+            once = true,
+            pattern = 'zshow',
+            callback = function(args)
+                if args.buf == state.bufnr then
+                    require('zshow.util').add_backdrop(args.buf, backdrop_opts)
+                end
+            end
+        })
+    end
+
     vim.api.nvim_set_option_value('winblend', opts.winblend, { win = state.winid })
 
     vim.api.nvim_set_option_value('filetype', 'zshow', { buf = state.bufnr })
@@ -180,19 +196,6 @@ function M.display_window(opts)
     vim.api.nvim_set_option_value('modifiable', false, { buf = state.bufnr })
     vim.api.nvim_set_option_value('readonly', true, { buf = state.bufnr })
     vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = state.bufnr })
-
-    if opts.backdrop.enable then
-        local backdrop_opts = opts.backdrop
-        backdrop_opts.enable = nil ---@cast backdrop_opts zshow.add_backdrop.opts
-
-        vim.api.nvim_create_autocmd('BufWinEnter', {
-            buffer = state.bufnr,
-            group = vim.api.nvim_create_augroup('zshow::open', { clear = true }),
-            callback = function(args)
-                require('zshow.util').add_backdrop(args.buf, backdrop_opts)
-            end
-        })
-    end
 
     return { bufnr = state.bufnr, winid = state.winid }
 end
