@@ -18,7 +18,7 @@ basic interaction for inspecting plugin sources.
 - Quickly close the window with `q` or `<Esc>`
 
 
-<video src="./.gitlab/demo.mp4" controls></video>
+https://files.catbox.moe/ckubei.mp4
 
 
 ---
