@@ -8,7 +8,7 @@ local state = {
 }
 
 ---@param buf zshow.ContentBuffer
----@param opts zshow._config.formatting
+---@param opts zshow.config.formatting
 local function render_header(buf, plugins, opts)
     local total = #plugins.loaded + #plugins.disabled + #plugins.disabled
 
@@ -28,7 +28,7 @@ end
 ---@param category string
 ---@param plugins zshow.info[]
 ---@param buf zshow.ContentBuffer
----@param opts zshow._config.formatting
+---@param opts zshow.config.formatting
 local function render_category(category, plugins, buf, opts)
     buf:empty_line()
         ---@diagnostic disable-next-line: param-type-mismatch
@@ -82,7 +82,7 @@ local function render_line_exts(bufnr, line, token_iter)
     end)
 end
 
----@param opts zshow._config.formatting
+---@param opts zshow.config.formatting
 local function render_plugininfo(bufnr, plugins, opts)
     local ContentBuffer = require('zshow.content-buffer')
     local content = ContentBuffer.new()
@@ -105,7 +105,7 @@ local function render_plugininfo(bufnr, plugins, opts)
     end
 end
 
----@param opts zshow._config.formatting
+---@param opts zshow.config.formatting
 local function populate_window(bufnr, _winid, opts)
     local info = require('zshow.data').get_plugininfo()
 
@@ -138,7 +138,7 @@ local function populate_window(bufnr, _winid, opts)
 end
 
 
----@param opts zshow._config
+---@param opts zshow.__config
 function M.display_window(opts)
     if not opts.win_config.border then
         ---@diagnostic disable-next-line: assign-type-mismatch

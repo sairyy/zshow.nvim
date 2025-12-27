@@ -1,18 +1,21 @@
 local M = {}
 
----@class zshow._config.backdrop : zshow.add_backdrop.opts
+---@class zshow.config.backdrop : zshow.add_backdrop.opts
 ---@field enable? boolean enable backdrop
 
----@class zshow._config.formatting
+---@alias zshow.config.win_opts vim.api.keyset.win_config
+
+---@class zshow.config.formatting
 ---@field listchars string[] characters to use in listings based on nesting level
 
----@class zshow._config
----@field winblend integer window pseudo-transparency
----@field backdrop zshow._config.backdrop dimming of windows in the background
----@field width number window width as a % of neovim's width (e.g.: 0.6)
----@field height number window height as a % of neovim's height (e.g.: 0.6)
----@field formatting zshow._config.formatting ui formatting options
----@field win_config vim.api.keyset.win_config options passed to |nvim_open_win|
+---@class zshow.__config
+---@field winblend   integer    window pseudo-transparency
+---@field width      number     window width as a % of neovim's width (e.g.: 0.6)
+---@field height     number     window height as a % of neovim's height (e.g.: 0.6)
+---
+---@field backdrop   zshow.config.backdrop      dimming of windows in the background
+---@field formatting zshow.config.formatting    ui formatting options
+---@field win_config zshow.config.win_opts      options passed to |nvim_open_win|
 M.default_config = {
     winblend = 0,
     width = 0.6,
@@ -32,7 +35,8 @@ M.default_config = {
         title_pos = 'center',
     },
 }
----@class (partial) zshow.config : zshow._config
+
+---@alias zshow.config Partial<zshow.__config>
 
 ---@param opts? zshow.config
 ---@return zshow.config
