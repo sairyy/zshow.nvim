@@ -46,8 +46,21 @@ function M.resolve(opts)
     opts = vim.tbl_deep_extend(
         'force',
         M.default_config,
-        opts or vim.g.zshow_opts or {}
+        vim.g.zshow_opts or {},
+        opts or {}
     )
+
+    vim.validate('winblend', opts.winblend, function(wb)
+        return wb >= 0 and wb <= 100
+    end, '0 < number < 100')
+
+    vim.validate('width', opts.width, function(x)
+        return x > 0 and x < 1
+    end, '0 < number < 1')
+
+    vim.validate('height', opts.height, function(h)
+        return h > 0 and h < 1
+    end, '0 < number < 1')
 
     return opts
 end
