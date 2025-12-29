@@ -18,7 +18,7 @@ basic interaction for inspecting plugin sources.
 - Quickly close the window with `q` or `<Esc>`
 
 
-![Github couldn't load the preview](https://gitlab.com/sairy/zshow.nvim/-/raw/master/.gitlab/demo.mp4)
+![Github couldn't load the preview; view it on Gitlab instead](.gitlab/demo.mp4)
 
 
 ---
@@ -119,7 +119,7 @@ Inside the window, the following bindings are available:
 - `K` - open the plugin's git repo (uses `vim.ui.open`)
     + local repos are opened with `:tabedit` instead
 
-No glabal keybindings are created by default, but you can add your own:
+No global keybindings are created by default, but you can add your own:
 
 ```lua
 vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>', { desc = 'View installed plugins' })
@@ -145,7 +145,7 @@ Feel free to open an issue or submit an MR if you find a bug or have any suggest
 
 ## 📋 References
 
-- [zpack.nvim](https://github.com/zuqini/zpack.nvim): plugin manager
-- [nvimdev/nvim-plugin-template](https://github.com/nvimdev/nvim-plugin-template): plugin template
-- [adriankarlen/plugin-view.nvim](https://github.com/adriankarlen/plugin-view.nvim): similar project
+- [zpack.nvim](https://github.com/zuqini/zpack.nvim) — plugin manager
+- [nvimdev/nvim-plugin-template](https://github.com/nvimdev/nvim-plugin-template) — plugin template
+- [adriankarlen/plugin-view.nvim](https://github.com/adriankarlen/plugin-view.nvim) — similar project
   for vanilla `vim.pack`
