@@ -1,27 +1,20 @@
-*zshow.nvim.txt*         For NVIM v0.12.0        Last change: 2025 December 29
-
-Author:  sairy
-License: MIT
-Repository: https://gitlab.com/sairy/zshow.nvim
-
-                                       Type |gO| to see the table of contents.
+*zshow.txt*           For NVIM v0.12.0           Last change: 2025 December 29
 
 ==============================================================================
-Table of Contents                               *zshow.nvim-table-of-contents*
+Table of Contents                                    *zshow-table-of-contents*
 
-1. zshow.nvim                                          |zshow.nvim-zshow.nvim|
-  - Features                                  |zshow.nvim-zshow.nvim-features|
-  - Requirements                          |zshow.nvim-zshow.nvim-requirements|
-  - Installation                          |zshow.nvim-zshow.nvim-installation|
-  - Configuration                        |zshow.nvim-zshow.nvim-configuration|
-  - Highlights                              |zshow.nvim-zshow.nvim-highlights|
-  - Commands / Keybindings      |zshow.nvim-zshow.nvim-commands-/-keybindings|
-  - Contributing                          |zshow.nvim-zshow.nvim-contributing|
-  - References                              |zshow.nvim-zshow.nvim-references|
-2. Links                                                    |zshow.nvim-links|
+1. zshow.nvim                                             |zshow-introduction|
+  - Features                                                  |zshow-features|
+  - Requirements                                          |zshow-requirements|
+  - Installation                                          |zshow-installation|
+  - Configuration                                        |zshow-configuration|
+  - Highlights                                              |zshow-highlights|
+  - Commands and Keybinds                        |zshow-commands-and-keybinds|
+  - Contributing                                          |zshow-contributing|
+  - References                                              |zshow-references|
 
 ==============================================================================
-1. zshow.nvim                                          *zshow.nvim-zshow.nvim*
+1. INTRODUCTION                                           *zshow-introduction*
 
 A simple plugin for viewing installed plugins managed by zpack.nvim
 <https://github.com/zuqini/zpack.nvim>.
@@ -31,7 +24,7 @@ basic interaction for inspecting plugin sources.
 
 ------------------------------------------------------------------------------
 
-FEATURES                                      *zshow.nvim-zshow.nvim-features*
+FEATURES                                                      *zshow-features*
 
 - Plugins sorted according to their load status:
     - Loaded
@@ -43,13 +36,13 @@ FEATURES                                      *zshow.nvim-zshow.nvim-features*
 
 ------------------------------------------------------------------------------
 
-REQUIREMENTS                              *zshow.nvim-zshow.nvim-requirements*
+REQUIREMENTS                                              *zshow-requirements*
 
 - Neovim `>= 0.12.0` (same as zpack <https://github.com/zuqini/zpack.nvim?tab=readme-ov-file#requirements>)
 
 ------------------------------------------------------------------------------
 
-INSTALLATION                              *zshow.nvim-zshow.nvim-installation*
+INSTALLATION                                              *zshow-installation*
 
 Using **zpack.nvim**:
 
@@ -73,7 +66,7 @@ Other plugin managers are unsupported.
 
 ------------------------------------------------------------------------------
 
-CONFIGURATION                            *zshow.nvim-zshow.nvim-configuration*
+CONFIGURATION                                            *zshow-configuration*
 
 There’s no configuration required to just use the plugin, but you can use the
 `vim.g.zshow_opts` variable to customize some UI aspects.
@@ -120,7 +113,7 @@ DEFAULT CONFIGURATION: ~
 
 ------------------------------------------------------------------------------
 
-HIGHLIGHTS                                  *zshow.nvim-zshow.nvim-highlights*
+HIGHLIGHTS                                                  *zshow-highlights*
 
   -------------------------------------------------------------------------
   Highlight          What                               Default
@@ -137,7 +130,7 @@ HIGHLIGHTS                                  *zshow.nvim-zshow.nvim-highlights*
   -------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
-COMMANDS / KEYBINDINGS          *zshow.nvim-zshow.nvim-commands-/-keybindings*
+COMMANDS AND KEYBINDS                            *zshow-commands-and-keybinds*
 
 zshow.nvim provides the command `ZShow` to open the plugin window.
 
@@ -145,7 +138,7 @@ Inside the window, the following bindings are available: - `q` / `<Esc>` -
 close the window - `K` - open the plugin’s git repo (uses `vim.ui.open`) +
 local repos are opened with `:tabedit` instead
 
-No global keybindings are created by default, but you can add your own:
+No global keybinds are created by default, but you can add your own:
 
 >lua
     vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>', { desc = 'View installed plugins' })
@@ -160,7 +153,7 @@ No global keybindings are created by default, but you can add your own:
 
 ------------------------------------------------------------------------------
 
-CONTRIBUTING                              *zshow.nvim-zshow.nvim-contributing*
+CONTRIBUTING                                              *zshow-contributing*
 
 Feel free to open an issue or submit an MR if you find a bug or have any
 suggestions.
@@ -170,7 +163,7 @@ suggestions.
 
 ------------------------------------------------------------------------------
 
-REFERENCES                                  *zshow.nvim-zshow.nvim-references*
+REFERENCES                                                  *zshow-references*
 
 - zpack.nvim <https://github.com/zuqini/zpack.nvim> — plugin manager
 - nvimdev/nvim-plugin-template <https://github.com/nvimdev/nvim-plugin-template> — plugin template
@@ -178,10 +171,5 @@ REFERENCES                                  *zshow.nvim-zshow.nvim-references*
     for vanilla `vim.pack`
 
 ==============================================================================
-2. Links                                                    *zshow.nvim-links*
-
-1. *Github couldn’t load the preview; view it on Gitlab instead*: .gitlab/demo.mp4
-
-Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
 vim:tw=78:ts=8:noet:ft=help:norl:

@@ -110,7 +110,7 @@ require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 
 ---
 
-## 🛠 Commands / Keybindings
+## 🛠 Commands and Keybinds
 
 zshow.nvim provides the command `ZShow` to open the plugin window.
 
@@ -119,7 +119,7 @@ Inside the window, the following bindings are available:
 - `K` - open the plugin's git repo (uses `vim.ui.open`)
     + local repos are opened with `:tabedit` instead
 
-No global keybindings are created by default, but you can add your own:
+No global keybinds are created by default, but you can add your own:
 
 ```lua
 vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>', { desc = 'View installed plugins' })
