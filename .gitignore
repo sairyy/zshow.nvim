@@ -1,6 +1,4 @@
 .nvim.lua
 .nvim/
 
-/panvimdoc-scripts/
 /dist-newstyle/
-panvimdoc.sh
