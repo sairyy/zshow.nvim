@@ -64,7 +64,7 @@ the value for `vim.g.zshow_opts`.
 require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 ```
 
-### Default configuration:
+### Default configuration
 
 ```lua
 {
