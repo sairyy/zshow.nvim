@@ -29,6 +29,7 @@ function M.add_backdrop(bufnr, opts)
         height = vim.o.lines,
         focusable = false,
         style = 'minimal',
+        border = 'none',
         zindex = opts.zindex - 1,
         hide = opts.respect_transparent_bg and is_transparent_bg(),
     })
