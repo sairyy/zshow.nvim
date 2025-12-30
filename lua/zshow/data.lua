@@ -42,7 +42,7 @@ function M.get_plugin(name)
     return {
         name = data.spec.name,
         url = data.spec.src,
-        version = data.rev
+        version = data.rev and data.rev:sub(1, 7)
     }
 end
 
