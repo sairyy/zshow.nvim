@@ -51,31 +51,49 @@ end
 local function get_plugin_version(name)
     local zp = require('zpack.state')
 
-    local spec = vim.iter(vim.tbl_values(zp.spec_registry))
-        :find(function(sp)
-            return sp.plugin.spec.name == name
-        end)
+    ---@type zpack.RegistryEntry?
+    local entry = vim.iter(vim.tbl_values(zp.spec_registry))
+        :find(function(sp) return sp.plugin.spec.name == name end)
 
-    if not spec then
+    if not entry or not entry.plugin then
         do return end
         local ok, packspec = pcall(vim.pack.get, { name })
-        if not ok or not packspec then return end
+        if not ok or not packspec or not packspec[1] then return end
 
-        return packspec[1].rev:gsub(1, 7)
+        return packspec[1].rev
     end
 
-    local path = spec.plugin.path
+    local path = entry.plugin.path
     local rv = vim.system(
         { 'git', 'rev-parse', '--short', 'HEAD' },
         { cwd = path, text = true }
     ):wait()
 
-    return (rv.stdout or ''):gsub('\n', '') -- sha
+    if not rv.stdout then return nil end
+
+    -- remove trailing newlines
+    local sha = rv.stdout:gsub('\n', '')
+    return sha
+end
+
+---@param plugin_names string[]
+---@return zshow.info?
+local function find_zpack(plugin_names)
+    for _, name in ipairs(plugin_names) do
+        if name:match('zpack') then
+            local candidate = M.get_plugin(name)
+            if candidate and candidate.url:match('zpack%.nvim$') then
+                return candidate
+            end
+        end
+    end
+
+    return nil
 end
 
 function M.get_plugininfo()
     local zp = require('zpack.state')
-    local plugins = vim.tbl_values(zp.spec_registry)
+    local plugins = zp.spec_registry
 
     local plugin_info = {
         ---@type zshow.info[]
@@ -86,15 +104,16 @@ function M.get_plugininfo()
         disabled = {},
     }
 
-    for _, plug in ipairs(plugins) do
+    for src, plug in pairs(plugins) do
+        local pack_spec = zp.src_to_pack_spec[src]
 
         local info = {
-            name = plug.plugin.spec.name,
-            url = plug.plugin.spec.src,
+            name = pack_spec.name,
+            url = pack_spec.src
         }
 
         -- HACK: lazy fetch 'version', as vim.pack.get()
-        -- is too slow at it due to IO
+        -- is too slow at it due to I/O
         setmetatable(info, { __index = function (self, k)
             if k == 'version' then
                 if not rawget(self, 'version') then
@@ -108,9 +127,11 @@ function M.get_plugininfo()
             return rawget(self, k)
         end })
 
-        if not resolve_enabled(plug.spec, plug.plugin) then
+        local zspec = plug.merged_spec or plug.specs[1]
+
+        if not resolve_enabled(zspec, plug.plugin) then
             table.insert(plugin_info.disabled, info)
-        elseif plug.loaded then
+        elseif plug.load_status == 'loaded' then
             table.insert(plugin_info.loaded, info)
         else
             table.insert(plugin_info.unloaded, info)
@@ -118,16 +139,16 @@ function M.get_plugininfo()
     end
 
     -- zpack does not keep track of itself
-    local zpack_plug = vim.iter(zp.registered_plugin_names)
-        :find(function(name) return name:match('zpack') and name end)
+    -- so we add it manually to `info.loaded`
+    local zpack_plug = find_zpack(zp.registered_plugin_names)
 
     if not zpack_plug then
         vim.notify(
-            'zshow: could not locate zpack plugin. skipping...',
+            'zshow: could not find zpack. skipping...',
             vim.log.levels.WARN
         )
     else
-        table.insert(plugin_info.loaded, M.get_plugin(zpack_plug))
+        table.insert(plugin_info.loaded, zpack_plug)
     end
 
     return plugin_info
