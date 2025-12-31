@@ -1,4 +1,4 @@
-*zshow.txt*           For NVIM v0.12.0           Last change: 2025 December 29
+*zshow.txt*           For NVIM v0.12.0           Last change: 2025 December 31
 
 Author:  sairy
 License: MIT
@@ -101,6 +101,7 @@ DEFAULT CONFIGURATION                            *zshow-default-configuration*
         formatting = {
             listchars = { '-', '+' },   -- characters to use in listings based on nesting level
             show_version = true,        -- display git commit SHA
+            short_sha = true,           -- use short commit SHA if `show_version = true`
         },
 
         -- same options as |nvim_open_win()|

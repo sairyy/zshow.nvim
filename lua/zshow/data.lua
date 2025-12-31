@@ -42,7 +42,7 @@ function M.get_plugin(name)
     return {
         name = data.spec.name,
         url = data.spec.src,
-        version = data.rev and data.rev:sub(1, 7)
+        version = data.rev
     }
 end
 
@@ -65,7 +65,7 @@ local function get_plugin_version(name)
 
     local path = entry.plugin.path
     local rv = vim.system(
-        { 'git', 'rev-parse', '--short', 'HEAD' },
+        { 'git', 'rev-parse', 'HEAD' },
         { cwd = path, text = true }
     ):wait()
 

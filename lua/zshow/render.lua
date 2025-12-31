@@ -7,6 +7,12 @@ local state = {
     ns = vim.api.nvim_create_namespace('zshow.ns')
 }
 
+---@param sha_str string
+---@return string
+local function short_sha(sha_str)
+    return sha_str:sub(1, 7)
+end
+
 ---@param buf zshow.ContentBuffer
 ---@param opts zshow.config.formatting
 local function render_header(buf, plugins, opts)
@@ -60,6 +66,10 @@ local function render_category(category, plugins, buf, opts)
                     vim.log.levels.WARN
                 )
             else
+                if opts.short_sha then
+                    version = short_sha(version)
+                end
+
                 buf:append(' ')
                     :append(
                         ('(%s)'):format(version),

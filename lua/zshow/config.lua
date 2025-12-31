@@ -8,6 +8,7 @@ local M = {}
 ---@class zshow.config.formatting
 ---@field listchars string[] characters to use in listings based on nesting level
 ---@field show_version boolean display git commit SHA
+---@field short_sha boolean use short SHA when displaying commit info
 
 ---@class zshow.__config
 ---@field winblend   integer    window pseudo-transparency
@@ -32,6 +33,7 @@ M.default_config = {
     formatting = {
         listchars = { '-', '+' },
         show_version = true,
+        short_sha = true,
     },
 
     win_config = {
