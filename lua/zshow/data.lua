@@ -17,7 +17,7 @@ local function resolve_enabled(spec, plugin)
         end
     elseif spec.cond ~= nil then
         if type(spec.cond) == 'function' then
-            return spec.cond(plugin) ---@diagnostic disable-line: param-type-mismatch
+            return spec.cond(plugin)
         else
             return spec.cond
         end
@@ -56,7 +56,6 @@ local function get_plugin_version(name)
         :find(function(sp) return sp.plugin.spec.name == name end)
 
     if not entry or not entry.plugin then
-        do return end
         local ok, packspec = pcall(vim.pack.get, { name })
         if not ok or not packspec or not packspec[1] then return end
 

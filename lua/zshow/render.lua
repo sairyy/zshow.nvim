@@ -19,7 +19,6 @@ local function render_header(buf, plugins, opts)
     local total = #plugins.loaded + #plugins.unloaded + #plugins.disabled
 
     buf:empty_line()
-        ---@diagnostic disable-next-line: param-type-mismatch
        :append(opts.listchars[1], 'ZShowListItem')
        :append(' ')
        :append('Total', 'ZShowSectionName')
@@ -37,7 +36,6 @@ end
 ---@param opts zshow.config.formatting
 local function render_category(category, plugins, buf, opts)
     buf:empty_line()
-        ---@diagnostic disable-next-line: param-type-mismatch
        :append(opts.listchars[1], 'ZShowListItem')
        :append(' ')
        :append(category, 'ZShowSectionName')
@@ -52,7 +50,6 @@ local function render_category(category, plugins, buf, opts)
 
     for _, plugin in ipairs(plugins) do
         buf:append('  ')
-            ---@diagnostic disable-next-line: param-type-mismatch
            :append(opts.listchars[2], 'ZShowListItem')
            :append(' ')
            :append(plugin.name, 'ZShowPlugin')

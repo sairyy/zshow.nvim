@@ -24,7 +24,6 @@ end
 ---@param text string
 ---@param hl? string
 function ContentBuffer:append(text, hl)
-    ---@diagnostic disable-next-line
     if self.pos == 0 then
         self.lines[#self.lines+1] = {}
         self.pos = 1
@@ -86,10 +85,10 @@ function ContentBuffer:token_iter()
         end
 
         ---@type zshow.ContentBuffer.line_token
-        local token = self.lines[line][i] 
+        local token = self.lines[line][i]
         col_start = col_end
         col_end = col_end + token:get_text():len()
-            
+
         return line, col_start, col_end, token
     end
 end
