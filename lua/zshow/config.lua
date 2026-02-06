@@ -46,14 +46,14 @@ M.default_config = {
 ---@alias zshow.config Partial<zshow.__config>
 
 ---@param opts? zshow.config
----@return zshow.config
+---@return zshow.__config
 function M.resolve(opts)
     opts = vim.tbl_deep_extend(
         'force',
         M.default_config,
         vim.g.zshow_opts or {},
-        opts or {}
-    )
+        opts or {} ---@diagnostic disable-line: param-type-mismatch
+    ) ---@cast opts zshow.__config
 
     vim.validate('winblend', opts.winblend, function(wb)
         return wb >= 0 and wb <= 100
