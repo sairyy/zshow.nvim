@@ -148,7 +148,7 @@ end
 
 ---@param bufnr integer
 ---@param opts zshow.add_backdrop.opts
-function add_backdrop(bufnr, opts)
+local function add_backdrop(bufnr, opts)
     vim.api.nvim_create_autocmd('FileType', {
         group = vim.api.nvim_create_augroup('zshow::open', { clear = true }),
         once = true,
