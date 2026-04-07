@@ -81,7 +81,7 @@ require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
     },
 
     formatting = {
-        listchars = { '-', '+' },   -- characters to use in listings based on nesting level
+        listchars = { '●', '○' },   -- characters to use in listings based on nesting level
         show_version = true,        -- display git commit SHA
         short_sha = true,           -- use short commit SHA if `show_version = true`
     },

@@ -31,7 +31,7 @@ M.default_config = {
     },
 
     formatting = {
-        listchars = { '-', '+' },
+        listchars = { '●', '○' },
         show_version = true,
         short_sha = true,
     },
