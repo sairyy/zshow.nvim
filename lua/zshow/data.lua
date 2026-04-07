@@ -26,55 +26,6 @@ local function resolve_enabled(spec, plugin)
     return true
 end
 
----@param name string
----@return zshow.info?
-function M.get_plugin(name)
-    local ok, plug = pcall(vim.pack.get, { name })
-    if not ok or not plug then
-        vim.notify(
-            'zshow: could not fetch spec for: ' .. name,
-            vim.log.levels.ERROR
-        )
-        return
-    end
-
-    local data = plug[1] --[[@as vim.pack.PlugData]]
-    return {
-        name = data.spec.name,
-        url = data.spec.src,
-        version = data.rev
-    }
-end
-
----@param name string
----@return string?
-local function get_plugin_version(name)
-    local zp = require('zpack.state')
-
-    ---@type zpack.RegistryEntry?
-    local entry = vim.iter(vim.tbl_values(zp.spec_registry))
-        :find(function(sp) return sp.plugin.spec.name == name end)
-
-    if not entry or not entry.plugin then
-        local ok, packspec = pcall(vim.pack.get, { name })
-        if not ok or not packspec or not packspec[1] then return end
-
-        return packspec[1].rev
-    end
-
-    local path = entry.plugin.path
-    local rv = vim.system(
-        { 'git', 'rev-parse', 'HEAD' },
-        { cwd = path, text = true }
-    ):wait()
-
-    if not rv.stdout then return nil end
-
-    -- remove trailing newlines
-    local sha = rv.stdout:gsub('\n', '')
-    return sha
-end
-
 ---@param plugin_names string[]
 ---@return zshow.info?
 local function find_zpack(plugin_names)
@@ -88,6 +39,26 @@ local function find_zpack(plugin_names)
     end
 
     return nil
+end
+
+---@param name string
+---@return zshow.info?
+function M.get_plugin(name)
+    local ok, plug = pcall(vim.pack.get, { name }, { info = false })
+    if not ok or not plug or #plug == 0 then
+        vim.notify(
+            'zshow: could not fetch spec for: ' .. name,
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    local data = plug[1] --[[@as vim.pack.PlugData]]
+    return {
+        name = data.spec.name,
+        url = data.spec.src,
+        version = data.rev
+    }
 end
 
 function M.get_plugininfo()
@@ -107,24 +78,16 @@ function M.get_plugininfo()
         local pack_spec = zp.src_to_pack_spec[src]
 
         local info = {
-            name = pack_spec.name,
-            url = pack_spec.src
+            name = pack_spec.name --[[@as string]],
+            url = pack_spec.src,
         }
 
-        -- HACK: lazy fetch 'version', as vim.pack.get()
-        -- is too slow at it due to I/O
-        setmetatable(info, { __index = function (self, k)
-            if k == 'version' then
-                if not rawget(self, 'version') then
-                    local ver = get_plugin_version(rawget(self, 'name'))
-                    if not ver then return nil end
+        -- get plugin revision from `vim.pack` since zpack doesn't store it
+        -- `{ info = false }` prevents `vim.pack` from fetching additional git info
+        local packs = vim.pack.get({ info.name }, { info = false })
 
-                    rawset(self, 'version', ver)
-                end
-            end
-
-            return rawget(self, k)
-        end })
+        assert(packs and #packs == 1, 'zshow: could not find plugin in vim.pack: ' .. info.name)
+        info.version = packs[1].rev
 
         local zspec = plug.merged_spec or plug.specs[1]
 

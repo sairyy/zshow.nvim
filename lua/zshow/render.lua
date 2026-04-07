@@ -54,25 +54,15 @@ local function render_category(category, plugins, buf, opts)
            :append(' ')
            :append(plugin.name, 'ZShowPlugin')
 
-        if opts.show_version then
+        if opts.show_version and plugin.version then
             local version = plugin.version
 
-            if not version then
-                vim.notify(
-                    'zshow: could not fetch version for plugin: ' .. plugin.name,
-                    vim.log.levels.WARN
-                )
-            else
-                if opts.short_sha then
-                    version = short_sha(version)
-                end
-
-                buf:append(' ')
-                    :append(
-                        ('(%s)'):format(version),
-                        'ZShowGitSha'
-                    )
+            if opts.short_sha then
+                version = short_sha(version)
             end
+
+            buf:append(' ')
+               :append(('(%s)'):format(version), 'ZShowGitSha')
         end
 
         buf:endl()
