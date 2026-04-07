@@ -2,8 +2,8 @@
 
 A simple plugin for viewing installed plugins managed by [zpack.nvim](https://github.com/zuqini/zpack.nvim).
 
-It opens a floating window listing plugins grouped by load status and provides
-basic interaction for inspecting plugin sources.
+It opens a floating window, listing plugins grouped by their load status and allows
+opening their corresponding repo, whether remote or local.
 
 ---
 
@@ -37,8 +37,7 @@ Using **[zpack.nvim](https://github.com/zuqini/zpack.nvim)**:
 ---@type zpack.Spec
 return {
     -- 'sairyy/zshow.nvim',
-    -- uncomment the line above and
-    -- comment the below one for the github version
+    -- uncomment the line above and comment the one below for the GitHub mirror
     src = 'https://gitlab.com/sairy/zpack.nvim',
     lazy = false, -- no need for lazy loading
     init = function()
@@ -49,17 +48,17 @@ return {
 }
 ```
 
-Other plugin managers are unsupported.
+It doesn't make much sense to use this plugin with managers other than zpack.
 
 ---
 
 ## ⚙️ Configuration
 
-There's no configuration required to just use the plugin, but you can use the
-`vim.g.zshow_opts` variable to customize some UI aspects.
+No configuration is needed to just use the plugin, but the `vim.g.zshow_opts`
+variable can be used to customize some UI elements.
 
-A compatibility `setup()` function exists, which just sets the opts table as
-the value for `vim.g.zshow_opts`.
+Alternatively, you can use the provided `setup()` function, which just sets its
+table argument as the value for `vim.g.zshow_opts`.
 ```lua
 require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 ```
@@ -103,7 +102,7 @@ require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 
 | Highlight          | What                                  | Default               |
 | ------------------ | ------------------------------------- | --------------------- |
-| `ZShowListItem`    | Listing nest indicators ('-', '+')    | `Character`, bold     |
+| `ZShowListItem`    | Listing nest indicators ('●', '○')    | `Character`, bold     |
 | `ZShowSectionName` | Name of the section (Loaded, etc.)    | `NormalFloat`, bold   |
 | `ZShowPlugin`      | Plugin name                           | `NormalFloat`         |
 | `ZShowPluginCount` | Plugin count number                   | `Comment`             |
@@ -117,8 +116,8 @@ require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 zshow.nvim provides the command `ZShow` to open the plugin window.
 
 Inside the window, the following bindings are available:
-- `q` / `<Esc>` - close the window
-- `K` - open the plugin's git repo (uses `vim.ui.open`)
+- `q` / `<Esc>`: close the window
+- `K`: open the plugin's git repo (uses `vim.ui.open`)
     + local repos are opened with `:tabedit` instead
 
 No global keybinds are created by default, but you can add your own:
@@ -128,8 +127,8 @@ vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>', { desc = 'View installed plu
 
 vim.keymap.set('n', '<leader>zo', function()
     require('zshow').open {
-        -- values passed here will override (for this function call only)
-        -- those set via `vim.g.zshow_opts`
+        -- values passed here will temporarily override those set
+        -- via `vim.g.zshow_opts`
     }
 end, { desc = 'View installed plugins' })
 ```
@@ -147,7 +146,6 @@ Feel free to open an issue or submit an MR if you find a bug or have any suggest
 
 ## 📋 References
 
-- [zpack.nvim](https://github.com/zuqini/zpack.nvim) — plugin manager
-- [nvimdev/nvim-plugin-template](https://github.com/nvimdev/nvim-plugin-template) — plugin template
-- [adriankarlen/plugin-view.nvim](https://github.com/adriankarlen/plugin-view.nvim) — similar project
-  for vanilla `vim.pack`
+- [zuqini/zpack.nvim](https://github.com/zuqini/zpack.nvim): plugin manager
+- [nvimdev/nvim-plugin-template](https://github.com/nvimdev/nvim-plugin-template): plugin template
+- [adriankarlen/plugin-view.nvim](https://github.com/adriankarlen/plugin-view.nvim): similar project for vanilla `vim.pack`
