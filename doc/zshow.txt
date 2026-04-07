@@ -130,6 +130,8 @@ DEFAULT CONFIGURATION                            *zshow-default-configuration*
   ZShowPluginCount   Plugin count number                Comment
 
   ZShowGitSha        Plugin git SHA                     Comment
+
+  ZShowBackdrop      Window backdrop (if enabled)       bg = #000000
   -------------------------------------------------------------------------
 ==============================================================================
 7. Commands and Keybinds                         *zshow-commands-and-keybinds*

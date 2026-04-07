@@ -1,9 +1,9 @@
-if vim.g.loaded_zshow ~= nil then
-    return
-end
+if vim.g.loaded_zshow ~= nil then return end
 
----@param name string Highlight group name
----@param val vim.api.keyset.highlight Highlight definition map
+vim.g.loaded_zshow = true
+
+---@param name string highlight group name
+---@param val vim.api.keyset.highlight highlight definition map
 local set_hl = function (name, val)
     val.default = true -- do not override existing definitions
     vim.api.nvim_set_hl(0, name, val)
@@ -23,15 +23,13 @@ set_hl('ZShowSectionName', {
 set_hl('ZShowPlugin', { link = 'NormalFloat' })
 set_hl('ZShowPluginCount', { link = 'Comment' })
 set_hl('ZShowGitSha', { link = 'Comment' })
+
+set_hl('ZShowBackdrop', { bg = '#000000' })
 ---
 
 
 ---[plugin commands]---
 vim.api.nvim_create_user_command('ZShow', function()
     require('zshow').open()
-end, { desc = 'Open zpack.nvim plugin overview' })
+end, { desc = 'Show zpack plugins' })
 ---
-
-
----
-vim.g.loaded_zshow = true

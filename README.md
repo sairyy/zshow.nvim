@@ -108,6 +108,7 @@ require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 | `ZShowPlugin`      | Plugin name                           | `NormalFloat`         |
 | `ZShowPluginCount` | Plugin count number                   | `Comment`             |
 | `ZShowGitSha`      | Plugin git SHA                        | `Comment`             |
+| `ZShowBackdrop`    | Window backdrop (if enabled)          | `bg = #000000`
 
 ---
 

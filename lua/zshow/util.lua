@@ -34,11 +34,7 @@ function M.add_backdrop(bufnr, opts)
         hide = opts.respect_transparent_bg and is_transparent_bg(),
     })
 
-    local ns = vim.api.nvim_create_namespace('backdrop.ns')
-    vim.api.nvim_win_set_hl_ns(winid, ns)
-    vim.api.nvim_set_hl(ns, 'Backdrop', { bg = '#000000', default = true })
-
-    vim.wo[winid].winhighlight = 'Normal:' .. 'Backdrop'
+    vim.wo[winid].winhighlight = 'Normal:' .. 'ZShowBackdrop'
     vim.wo[winid].winblend = opts.winblend
     vim.bo[backdrop_bufnr].buftype = 'nofile'
 
