@@ -117,6 +117,7 @@ local function add_keymaps(bufnr)
 
     map('u', function()
         vim.pack.update(nil, { force = true })
+        vim.notify("Updated all plugins")
     end, { desc = 'Update all plugins' })
 
     map('U', function()
@@ -126,6 +127,7 @@ local function add_keymaps(bufnr)
         if not require('zshow.data').get_plugin(plug_name) then return end
 
         vim.pack.update({ plug_name }, { force = true })
+        vim.notify("Updated " .. plug_name)
     end, { desc = 'Update plugin at cursor' })
 
     map('K', function()
