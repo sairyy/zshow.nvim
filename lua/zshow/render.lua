@@ -102,14 +102,33 @@ local function render_plugininfo(bufnr, plugins, opts)
 end
 
 local function add_keymaps(bufnr)
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', {
-        buffer = bufnr, desc = 'close window'
-    })
-    vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', {
-        buffer = bufnr, desc = 'close window'
-    })
+    ---@param lhs string
+    ---@param rhs string|fun()
+    ---@param opts? vim.keymap.set.Opts
+    local function map(lhs, rhs, opts)
+        opts = opts or {}
+        opts.buf = bufnr
 
-    vim.keymap.set('n', 'K', function()
+        vim.keymap.set('n', lhs, rhs, opts)
+    end
+
+    map('q', '<cmd>close<cr>', { desc = 'Close window' })
+    map('<esc>', '<cmd>close<cr>', { desc = 'Close window' })
+
+    map('u', function()
+        vim.pack.update(nil, { force = true })
+    end, { desc = 'Update all plugins' })
+
+    map('U', function()
+        local plug_name = vim.fn.expand('<cWORD>')
+
+        -- fail silently if not a plugin
+        if not require('zshow.data').get_plugin(plug_name) then return end
+
+        vim.pack.update({ plug_name }, { force = true })
+    end, { desc = 'Update plugin at cursor' })
+
+    map('K', function()
         local plug_name = vim.fn.expand('<cWORD>')
 
         local plugin = require('zshow.data').get_plugin(plug_name)
@@ -125,14 +144,17 @@ local function add_keymaps(bufnr)
                 end)
             end
         end)
-    end, { buffer = bufnr, desc = 'open plugin uri' })
+    end, { desc = 'Open plugin URI' })
 end
 
 ---@param opts zshow.config.formatting
 local function populate_window(bufnr, _winid, opts)
     local info = require('zshow.data').get_plugininfo()
 
+    vim.api.nvim_set_option_value('modifiable', true, { buf = state.bufnr })
     render_plugininfo(bufnr, info, opts)
+    vim.api.nvim_set_option_value('modifiable', false, { buf = state.bufnr })
+
     add_keymaps(bufnr)
 end
 
@@ -198,9 +220,16 @@ function M.display_window(opts)
 
     vim.api.nvim_set_option_value('filetype', 'zshow', { buf = state.bufnr })
 
-    vim.api.nvim_set_option_value('modifiable', false, { buf = state.bufnr })
     vim.api.nvim_set_option_value('readonly', true, { buf = state.bufnr })
     vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = state.bufnr })
+
+    vim.api.nvim_create_autocmd('PackChanged', {
+        buf = state.bufnr,
+        group = vim.api.nvim_create_augroup('zshow::rerender', { clear = true }),
+        callback = function()
+            populate_window(state.bufnr, state.winid, opts.formatting)
+        end
+    })
 
     return { bufnr = state.bufnr, winid = state.winid }
 end

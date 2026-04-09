@@ -15,6 +15,8 @@ opening their corresponding repo, whether remote or local.
     + Disabled
 - Press `K` on a plugin name to open its git repo on a web browser
     + local repos are opened with `:tabedit` instead
+- Update all plugins by pressing `u`
+    + pressing `U` while hovering over a plugin name will update that plugin only.
 - Quickly close the window with `q` or `<Esc>`
 
 
@@ -111,16 +113,23 @@ require('zshow').setup(opts) -- will set `vim.g.zshow_opts = opts`
 
 ---
 
-## 🛠 Commands and Keybinds
+## 🛠 Commands and Keymaps
 
 zshow.nvim provides the command `ZShow` to open the plugin window.
 
-Inside the window, the following bindings are available:
+Inside the window, the following mappings are available:
 - `q` / `<Esc>`: close the window
-- `K`: open the plugin's git repo (uses `vim.ui.open`)
+- `K`: open the git repo of the plugin on top of the cursor
+    + uses `vim.ui.open` for remote plugins
     + local repos are opened with `:tabedit` instead
+- `u`: update all plugins
+- `U`: update the plugin on top of the cursor
 
-No global keybinds are created by default, but you can add your own:
+> [!note]
+> The two update mappings above try to update plugins without user confirmation.
+> If you wish to review changes first, use `:ZUpdate` like usual.
+
+No global keymaps are created by default, but you can add your own:
 
 ```lua
 vim.keymap.set('n', '<leader>zs', '<cmd>ZShow<cr>', { desc = 'View installed plugins' })
