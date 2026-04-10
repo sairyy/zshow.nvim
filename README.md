@@ -11,14 +11,17 @@ opening their corresponding repo, whether remote or local.
 
 - Plugins sorted according to their load status:
     + Loaded
-    + Not loaded (if `lazy = true` in zpack Spec)
-    + Disabled
+    + Not loaded (`lazy = true` or `cmd`/`event`/`ft`/`keys` defined in zpack Spec)
+    + Disabled (`cond = false`)
 - Press `K` on a plugin name to open its git repo on a web browser
     + local repos are opened with `:tabedit` instead
 - Update all plugins by pressing `u`
     + pressing `U` while hovering over a plugin name will update that plugin only.
 - Quickly close the window with `q` or `<Esc>`
 
+> [!note]
+> For plugins to show up as "Disabled" they must have `cond = false` in their spec.
+> Plugins with `enabled = false` become invisible to both `zshow` and `zpack`.
 
 ![Github couldn't load the preview; view it on Gitlab instead](.gitlab/demo.mp4)
 
