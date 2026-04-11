@@ -107,6 +107,7 @@ local function add_keymaps(bufnr)
     ---@param opts? vim.keymap.set.Opts
     local function map(lhs, rhs, opts)
         opts = opts or {}
+        ---@diagnostic disable-next-line: inject-field
         opts.buffer = bufnr
 
         vim.keymap.set('n', lhs, rhs, opts)
