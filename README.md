@@ -17,6 +17,7 @@ opening their corresponding repo, whether remote or local.
     + local repos are opened with `:tabedit` instead
 - Update all plugins by pressing `u`
     + pressing `U` while hovering over a plugin name will update that plugin only.
+    + see `:h LspProgress` for how to set up update notifications.
 - Quickly close the window with `q` or `<Esc>`
 
 > [!note]
