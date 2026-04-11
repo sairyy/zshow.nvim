@@ -107,7 +107,7 @@ local function add_keymaps(bufnr)
     ---@param opts? vim.keymap.set.Opts
     local function map(lhs, rhs, opts)
         opts = opts or {}
-        opts.buf = bufnr
+        opts.buffer = bufnr
 
         vim.keymap.set('n', lhs, rhs, opts)
     end
@@ -224,7 +224,7 @@ function M.display_window(opts)
     vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = state.bufnr })
 
     vim.api.nvim_create_autocmd('PackChanged', {
-        buf = state.bufnr,
+        buffer = state.bufnr,
         group = vim.api.nvim_create_augroup('zshow::rerender', { clear = true }),
         callback = function()
             populate_window(state.bufnr, state.winid, opts.formatting)
