@@ -1,9 +1,9 @@
 #!/bin/sh
 
-VIMDOC="./panvimdoc"
+VIMDOC="${PANVIMDOC:-./panvimdoc}"
 
 if [ ! -d "${VIMDOC}" ]; then
-    echo 'submodules needed: `git submodule update --init --recursive`' >&2
+    echo 'could not find panvimdoc directory' >&2
     exit 1
 fi
 
