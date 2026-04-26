@@ -135,16 +135,13 @@ local function add_keymaps(bufnr)
         local plugin = require('zshow.data').get_plugin(plug_name)
         if not plugin then return end
 
-        -- check if it's a local directory
-        vim.uv.fs_stat(plugin.url, function(err, sb)
-            if err or not sb then
-                vim.ui.open(('%s/commit/%s'):format(plugin.url, plugin.version))
-            else
-                vim.schedule(function()
-                    vim.cmd.tabedit { plugin.url }
-                end)
-            end
-        end)
+        local url, is_local = require('zshow.util').get_commit_url(plugin)
+
+        if is_local then
+            vim.schedule(function() vim.cmd.tabedit { url } end)
+        else
+            vim.ui.open(url)
+        end
     end, { desc = 'Open plugin URI' })
 end
 

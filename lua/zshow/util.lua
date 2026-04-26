@@ -64,4 +64,51 @@ function M.add_backdrop(bufnr, opts)
     end
 end
 
+---@param url string
+---@return boolean
+local function is_repo_local(url)
+    return url:match('^https://') == nil
+end
+
+---Resolve a URL to a plugin version based on its repo host
+---@param plugin zshow.info plugin
+---@return string resolved URL
+---@return boolean whether the URL refers to a locally-hosted repo
+---@see vim._core.util.get_forge_url for nvim-0.13 nightly and above
+function M.get_commit_url(plugin)
+    local util = require('vim._core.util')
+    
+    -- not sure if this can really ever happen ¯\_(ツ)_/¯
+    if not plugin.version then
+        return plugin.url, is_repo_local(plugin.url)
+    end
+
+    -- backwards compat for 0.12.x stable release(s) {{{
+    if util.get_forge_url == nil then
+        local is_local = is_repo_local(plugin.url)
+
+        local url = plugin.url
+        if not is_local then
+            url = ('%s/%s/%s'):format(
+                plugin.url:gsub('/+$', ''),
+                'commit',
+                plugin.version
+            )
+        end
+
+        return url, is_local
+    end
+    -- }}}
+
+    local url = util.get_forge_url(plugin.url, plugin.version, 'commit')
+
+    if not url then
+        -- forcing a checkout for local repos sounds like a bad idea
+        -- so we just return the path URL to it
+        return plugin.url, true
+    end
+
+    return url, false
+end
+
 return M

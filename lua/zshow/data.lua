@@ -63,9 +63,7 @@ function M.get_plugininfo()
         disabled = {},
     }
 
-    local plugins = zp.get_plugins()
-
-    for _, p in ipairs(plugins) do
+    for _, p in ipairs(zp.get_plugins()) do
         local info = {
             name = p.name,
             url = p.src,
