@@ -156,7 +156,7 @@ Inside the window, the following mappings are available:
 
 Note:
 - The two update mappings above try to update plugins without user confirmation.
-- If you wish to review changes first, use `:ZUpdate` like usual.
+- If you wish to review changes first, use `:ZPack update` like usual.
 
 No global keymaps are created by default, but you can add your own:
 
